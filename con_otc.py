@@ -88,4 +88,19 @@ def assert_owner():
 
 def distribute_payouts(token_list):
     for token in token_list:
-        if payout[token] > 
+        if payout[token] > 0:
+            total_payout = payout[token]
+            token_balances = ForeignHash(foreign_contract=token, foreign_name='balances')
+            otc_balance_before_payout = token_balances[ctx.this]
+            
+            for owner in owners.get():
+                payout_amount = owner_perc[owner] * total_payout
+                if payout_amount > 0:
+                    I.import_module(token).transfer(amount=payout_amount, to=owner)
+            
+            otc_balance_after_payout = token_balances[ctx.this]
+            actual_payout = otc_balance_before_payout - otc_balance_after_payout
+            
+            # Asegura que el monto pagado no exceda el saldo disponible, ajustando el saldo de payout según sea necesario.
+            payout[token] -= actual_payout
+
