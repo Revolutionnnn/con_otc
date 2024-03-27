@@ -42,6 +42,7 @@ def adjust_fee(trading_fee: float):
     assert 0 <= trading_fee <= 10, 'Wrong fee value'
     fee.set(decimal(trading_fee))
 
+# Revisar esta funcion no esta funcinando
 @export
 def payout_owners(token_list: list):
     assert_owner()
@@ -86,6 +87,7 @@ def refund_maker(offer):
 def assert_owner():
     assert ctx.caller in owners.get(), 'Only owner can call this method!'
 
+# Revisar esta funcion no esta funcinando
 def distribute_payouts(token_list):
     for token in token_list:
         if payout[token] > 0:
