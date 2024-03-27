@@ -1,2 +1,2 @@
-# con_otc002
-Lamden OTC contract
+# con_otc
+Xian OTC contract
